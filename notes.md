@@ -1,4 +1,4 @@
-for next time:
+## for next time:
 [] create migrations for :users :dogs :tricks :dog_tricks
 [] #place methods (1.place returns "first") for integer class?
 [] RESTful Routes
