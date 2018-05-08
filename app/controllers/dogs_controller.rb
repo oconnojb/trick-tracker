@@ -19,6 +19,14 @@ class DogsController < Sinatra::Base
     end
   end
 
+  get '/dogs/new' do
+    logged_in? ? (erb :'dogs/new') : (redirect "/login?failed=yes")
+  end
+
+  post '/dogs' do
+    binding.pry
+  end
+
   helpers do
 		def logged_in?
 			!!session[:user_id]

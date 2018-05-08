@@ -1,0 +1,17 @@
+<h1>Use this form to create a new dog!</h1>
+
+<form action="/dogs" method="post">
+  <h3>Name:</h3>
+  <p><input type="text" name="dog[name]"></p>
+
+  <h3>Date of Birth:</h3>
+  <p><input type="date" name="dog[dob]"></p>
+
+  <h3>Breed:</h3>
+  <% breeds = Dog.all.collect{|d| d.breed}.compact %>
+  <% breeds.uniq.each do |breed| %>
+    <p><input type="radio" name="dog[breed]"> <%= breed %> </p>
+  <% end %>
+  <p>Or, make a new breed: <input type="text" name="dog[]" value=""></p>
+
+</form>
