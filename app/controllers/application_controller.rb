@@ -10,11 +10,11 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-    erb :'index'
+    logged_in? ? (redirect '/home') : (erb :'index')
   end
 
   get '/signup' do
-    erb :'users/signup'
+    logged_in? ? (redirect '/home') : (erb :'users/signup')
   end
 
   post '/signup' do
@@ -28,7 +28,20 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/home' do
-    "Home Page!"
+    if logged_in?
+      erb :'users/home'
+    else
+      redirect '/'
+    end
+  end
+
+  get '/login' do
+    logged_in? ? (redirect '/home') : (erb :'users/login')
+  end
+
+  get '/logout' do
+    session.clear
+    redirect '/'
   end
 
   helpers do
