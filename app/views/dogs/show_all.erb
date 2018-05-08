@@ -1,0 +1,8 @@
+<h1> <%= @user.name %>, here are all of your dogs! </h1>
+
+<% @dogs.each do |dog| %>
+  <a href="/dogs/<% dog.id %>"><%= dog.name %></a>
+  <br>
+<% end %>
+<h6>-or-</h6>
+<a href="/dogs/new">Adopt a new dog</a>
