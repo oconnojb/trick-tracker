@@ -9,7 +9,7 @@ class ApplicationController < Sinatra::Base
     set :session_secret, "password_security"
   end
 
-  
+
 
   helpers do
 		def logged_in?
@@ -19,6 +19,15 @@ class ApplicationController < Sinatra::Base
 		def current_user
 			User.find(session[:user_id])
 		end
+
+    def place(integer)
+      placement_array = ['zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']
+      if integer > 0 && integer <= 10
+        return placement_array[integer]
+      else
+        return integer
+      end
+    end
 	end
 
 end
