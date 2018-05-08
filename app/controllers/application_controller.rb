@@ -29,6 +29,7 @@ class ApplicationController < Sinatra::Base
 
   get '/home' do
     if logged_in?
+      @user = User.find_by(id: session[:user_id])
       erb :'users/home'
     else
       redirect '/'
@@ -37,6 +38,20 @@ class ApplicationController < Sinatra::Base
 
   get '/login' do
     logged_in? ? (redirect '/home') : (erb :'users/login')
+  end
+
+  post '/login' do
+    if !params[:user][:email].empty? && !params[:user][:password].empty?
+      @user = User.find_by(email: params[:user][:email])
+      if !!@user.authenticate(params[:user][:password])
+        session[:user_id] = @user.id
+        redirect '/home'
+      else
+        redirect "/login?failed=yes"
+      end
+    else
+      redirect "/login?failed=yes"
+    end
   end
 
   get '/logout' do
