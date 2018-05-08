@@ -1,0 +1,12 @@
+<h1>Use this form to Sign Up for Trick-Tracker</h1>
+
+<% if !!params[:failed] %>
+  <p>I'm sorry, something went wrong. Please try again!</p>
+<% end %>
+
+<form action="/signup" method="post">
+  <p> Name: <input type="text" name="user[name]"></p>
+  <p> Email: <input type="text" name="user[email]"></p>
+  <p> Password: <input type="password" name="user[password]"></p>
+  <input type="submit" name="submit" value="Sign Up!">
+</form>

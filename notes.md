@@ -1,6 +1,6 @@
 ## for next time:
 [x] create migrations for :users :dogs :tricks :dog_tricks
-[] #place methods (1.place returns "first") for integer class?
+[x] #place methods (1.place returns "first") for integer class?
 [] RESTful Routes
   - probably will look nicest to do different controllers
 
