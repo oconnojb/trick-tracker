@@ -9,6 +9,16 @@ class TricksController < Sinatra::Base
     set :session_secret, "password_security"
   end
 
+  get '/tricks' do
+    if logged_in?
+      @user = current_user
+      @tricks = @user.tricks.uniq
+      erb :'tricks/breakdown'
+    else
+      redirect "/login?failed=yes"
+    end
+  end
+
   get '/tricks/new' do
     if logged_in?
       @user = current_user
@@ -31,7 +41,15 @@ class TricksController < Sinatra::Base
   end
 
   get '/tricks/:id' do
-    @trick = Trick.find_by(id: params[:id])
+    if logged_in?
+      @user = current_user
+      @trick = Trick.find_by(id: params[:id])
+      binding.pry
+      erb :'tricks/show_one'
+    else
+      redirect "/login?failed=yes"
+    end
+
   end
 
   helpers do

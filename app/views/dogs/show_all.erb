@@ -2,7 +2,7 @@
 
 <% if @dogs.size > 0 %>
   <% @dogs.each do |dog| %>
-    <a href="/dogs/<% dog.id %>"><%= dog.name %></a>
+    <a href="/dogs/<%= dog.slug %>"><%= dog.name %></a>
     <br>
   <% end %>
 <% end %>

@@ -1,0 +1,19 @@
+<h1><%= @trick.name.capitalize %></h1>
+<h2>Degree of difficulty:</h2>
+<% @trick.difficulty.times do %>
+  x
+<% end %>
+<% (10 - @trick.difficulty).times do %>
+  -
+<% end %>
+<h2>Description:</h2>
+<p><%= @trick.description %></p>
+
+<h2>Dogs that know <%= @trick.name.capitalize %></h2>
+<% @user.dogs.select{|dog| dog.tricks.include?(@trick)}.each do |doggo| %>
+  <ul>
+    <li><a href="dogs/<%= doggo.slug %>"><%= doggo.name %></a></li>
+  </ul>
+<% end %>
+
+<a href="#">Edit Trick</a>
