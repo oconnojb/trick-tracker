@@ -1,4 +1,7 @@
 ## for next time:
+Editing user, dog, trick
+
+## overall goals:
 [x] create migrations for :users :dogs :tricks :dog_tricks
 [x] #place methods (1.place returns "first") for integer class?
 [x]  Dog dob??? -- actually: Dog age
@@ -20,8 +23,8 @@
   D- delete an existing dog
 
   [] trick_controller
-  C- create a new trick
-  R- show all of the tricks that i have taught at least one dog
-  R- show the details of one specific trick (slug?)
+  Cx- create a new trick
+  Rx- show all of the tricks that i have taught at least one dog
+  Rx- show the details of one specific trick
   U- edit an existing trick's details
   D- delete an existing trick
