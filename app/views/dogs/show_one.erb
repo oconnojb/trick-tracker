@@ -10,10 +10,10 @@
 <% if @dog.tricks.size > 0 %>
   <% @dog.tricks.each do |trick| %>
     <ul>
-      <li><a href="#"> <%= trick.name %> </a></li>
+      <li><a href="/tricks/<%= trick.id %>"> <%= trick.name %> </a></li>
     </ul>
   <% end %>
 <% else %>
   <p> <%= @dog.name %> does not know any tricks yet!</p>
 <% end %>
-<a href="#">Teach <%= @dog.name %> a new trick!</a>
+<a href="/tricks/new">Teach <%= @dog.name %> a new trick!</a>

@@ -34,8 +34,12 @@ class DogsController < Sinatra::Base
   end
 
   get '/dogs/:slug' do
-    @dog = Dog.find_by_slug(params[:slug])
-    erb :'dogs/show_one'
+    if logged_in?
+      @dog = Dog.find_by_slug(params[:slug])
+      erb :'dogs/show_one'
+    else
+      redirect "/login?failed=yes"
+    end
   end
 
   helpers do

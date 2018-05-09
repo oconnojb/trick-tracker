@@ -15,7 +15,7 @@
   [] dog_controller
   Cx- adopt a new dog
   Rx- show all of my dogs
-  R- show one specific dog (-x-name slug?)
+  Rx- show one specific dog (-x-name slug?)
   U- edit an existing dog
   D- delete an existing dog
 
