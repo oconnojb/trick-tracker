@@ -1,17 +1,17 @@
 <h1>Use this form to create a new dog!</h1>
 
-<form action="/dogs" method="post">
+<form action="/dogs/new" method="post">
   <h3>Name:</h3>
   <p><input type="text" name="dog[name]"></p>
 
-  <h3>Date of Birth:</h3>
-  <p><input type="date" name="dog[dob]"></p>
+  <h3>Age (in years):</h3>
+  <p><input type="integer" name="dog[age]"></p>
 
   <h3>Breed:</h3>
   <% breeds = Dog.all.collect{|d| d.breed}.compact %>
   <% breeds.uniq.each do |breed| %>
-    <p><input type="radio" name="dog[breed]"> <%= breed %> </p>
+    <p><input type="radio" name="dog[breed][<%= breed %>]"> <%= breed %> </p>
   <% end %>
-  <p>Or, make a new breed: <input type="text" name="dog[]" value=""></p>
-
+  <p>Or, make a new breed: <input type="text" name="new_breed" value=""></p>
+  <input type="submit" name="submit" value="Adopt!">
 </form>

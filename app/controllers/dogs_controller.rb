@@ -23,8 +23,19 @@ class DogsController < Sinatra::Base
     logged_in? ? (erb :'dogs/new') : (redirect "/login?failed=yes")
   end
 
-  post '/dogs' do
+  post '/dogs/new' do
+    @user = User.find(session[:user_id])
+    @dog = @user.dogs.build(name: params[:dog][:name], age:params[:dog][:age])
+    @dog.breed = params[:dog][:breed].keys.first if !!params[:dog][:breed]
+    @dog.breed = params[:new_breed] if !params[:new_breed].empty?
+    @user.save
+    redirect "/dogs/#{@dog.slug}"
+  end
+
+  get '/dogs/:slug' do
+    @dog = Dog.find_by_slug(params[:slug])
     binding.pry
+    erb :'dogs/show_one'
   end
 
   helpers do
