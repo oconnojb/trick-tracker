@@ -1,0 +1,19 @@
+<% if !!params[:new] %>
+  <h1>Congratulations!</h1>
+  <h3>You have adopted your <%= params[:new] %> dog!</h3>
+  <p>------------------------------------------</p>
+<% end %>
+
+<h1> <%= @dog.name %> </h1>
+<h2><%= @dog.age %> years old</h2>
+<h2>Tricks:</h2>
+<% if @dog.tricks.size > 0 %>
+  <% @dog.tricks.each do |trick| %>
+    <ul>
+      <li><a href="#"> <%= trick.name %> </a></li>
+    </ul>
+  <% end %>
+<% else %>
+  <p> <%= @dog.name %> does not know any tricks yet!</p>
+<% end %>
+<a href="#">Teach <%= @dog.name %> a new trick!</a>

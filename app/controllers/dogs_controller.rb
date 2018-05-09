@@ -29,12 +29,12 @@ class DogsController < Sinatra::Base
     @dog.breed = params[:dog][:breed].keys.first if !!params[:dog][:breed]
     @dog.breed = params[:new_breed] if !params[:new_breed].empty?
     @user.save
-    redirect "/dogs/#{@dog.slug}"
+    @place = place(@user.dogs.size)
+    redirect "/dogs/#{@dog.slug}?new=#{@place}"
   end
 
   get '/dogs/:slug' do
     @dog = Dog.find_by_slug(params[:slug])
-    binding.pry
     erb :'dogs/show_one'
   end
 
