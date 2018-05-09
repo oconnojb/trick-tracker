@@ -1,0 +1,23 @@
+<h1>You are going to teach <%= @dog.name %> a new trick!</h1>
+
+<h2>Currently, <%= @dog.name %> knows <%= @dog.tricks.size %> trick(s)</h2>
+<% if @dog.tricks.size > 0 %>
+  <% @dog.tricks.each do |trick| %>
+    <ul>
+      <li><a href="/tricks/<%= trick.id %>"> <%= trick.name %> </a></li>
+    </ul>
+  <% end %>
+<% end %>
+
+<form action="/tricks/new" method="post">
+  <p>Which tricks would you like to teach <%= @dog.name %>?</p>
+  <% Trick.all.each do |trick| %>
+    <p><input type="checkbox" name="tricks[<%= trick.name %>]"> <%= trick.name %> </p>
+  <% end %>
+  <p>And/Or, make a new trick:</p>
+  <p>Name: <input type="text" name="new_trick[name]"></p>
+  <p>Difficulty (1-10): <input type="integer" name="new_trick[difficulty]"></p>
+  <textarea name="new_trick[description]" rows="4" cols="40" placeholder="Description"></textarea>
+  <br>
+  <input type="submit" name="submit" value="Teach Trick(s)!">
+</form>
