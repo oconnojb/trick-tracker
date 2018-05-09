@@ -11,7 +11,7 @@ class DogsController < Sinatra::Base
 
   get '/dogs' do
     if logged_in?
-      @user = User.find(session[:user_id])
+      @user = current_user
       @dogs = @user.dogs
       erb :'dogs/show_all'
     else
@@ -24,7 +24,7 @@ class DogsController < Sinatra::Base
   end
 
   post '/dogs/new' do
-    @user = User.find(session[:user_id])
+    @user = current_user
     @dog = @user.dogs.build(name: params[:dog][:name], age:params[:dog][:age])
     @dog.breed = params[:dog][:breed].keys.first if !!params[:dog][:breed]
     @dog.breed = params[:new_breed] if !params[:new_breed].empty?

@@ -11,7 +11,7 @@ class TricksController < Sinatra::Base
 
   get '/tricks/new' do
     if logged_in?
-      @user = User.find(session[:user_id])
+      @user = current_user
       @dog = Dog.find_by_slug(params[:slug])
       erb :'tricks/new'
     else
@@ -20,7 +20,7 @@ class TricksController < Sinatra::Base
   end
 
   post '/tricks/new' do
-    @user = User.find(session[:user_id])
+    @user = current_user
     @dog = Dog.find_by(id: params[:dog_id])
     params[:tricks].keys.each do |trick_name|
       @dog.tricks << Trick.find_by(name: trick_name)
@@ -28,6 +28,10 @@ class TricksController < Sinatra::Base
     @dog.tricks.build(params[:new_trick])
     @dog.save
     redirect "/dogs/#{@dog.slug}"
+  end
+
+  get '/tricks/:id' do
+    @trick = Trick.find_by(id: params[:id])
   end
 
   helpers do
