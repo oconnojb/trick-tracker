@@ -44,7 +44,6 @@ class TricksController < Sinatra::Base
     if logged_in?
       @user = current_user
       @trick = Trick.find_by(id: params[:id])
-      binding.pry
       erb :'tricks/show_one'
     else
       redirect "/login?failed=yes"

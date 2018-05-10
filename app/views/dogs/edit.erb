@@ -1,1 +1,21 @@
-<h1>Would you like to edit <%= @dog.name %>'s information?</h1>
+<h1>Would you like to edit this dog's information?</h1>
+
+<h2>Here is our current information:</h2>
+<p>Name: <%= @dog.name %></p>
+<p>Age: <%= @dog.age %></p>
+<p>Breed: <%= @dog.breed %></p>
+
+<form action="/dogs/<%= @dog.slug %>/edit" method="post">
+  <h2>Use this form to edit the information:</h2>
+  <h3>Anything left blank will not be changed.</h3>
+  <p>Name: <input type="text" name="name"></p>
+  <p>Age: <input type="integer" name="age"></p>
+  <p>Select a Breed:</p>
+  <% breeds = Dog.all.collect{|d| d.breed}.uniq.compact%>
+  <% breeds.each do |breed| %>
+    <input type="radio" name="breed[<%= breed %>]"> <%= breed %> </input>
+    <br>
+  <% end %>
+  <p>Or, make a new breed: <input type="text" name="new_breed"></p>
+  <input type="submit" name="submit" value="Edit Dog">
+</form>

@@ -6,6 +6,7 @@
 
 <h1> <%= @dog.name %> </h1>
 <h2><%= @dog.age %> years old</h2>
+<h2>Breed: <%= @dog.breed %></h2>
 <h2>Tricks:</h2>
 <% if @dog.tricks.size > 0 %>
   <% @dog.tricks.each do |trick| %>
