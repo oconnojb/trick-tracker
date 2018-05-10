@@ -43,7 +43,7 @@ class ApplicationController < Sinatra::Base
   post '/login' do
     if !params[:user][:email].empty? && !params[:user][:password].empty?
       @user = User.find_by(email: params[:user][:email])
-      if !!@user.authenticate(params[:user][:password])
+      if (@user!=nil) && (!!@user.authenticate(params[:user][:password]))
         session[:user_id] = @user.id
         redirect '/home'
       else
@@ -79,6 +79,29 @@ class ApplicationController < Sinatra::Base
   get '/logout' do
     session.clear
     redirect '/'
+  end
+
+  get '/delete' do
+    if logged_in?
+      @user = current_user
+      erb :'users/delete'
+    else
+      redirect "/login?failed=yes"
+    end
+  end
+
+  post '/delete' do
+    @user = current_user
+    if !!@user.authenticate(params[:password])
+      @user.dogs.each do |dog|
+        dog.delete
+      end
+      @user.delete
+      session.clear
+      redirect '/'
+    else
+      redirect "/delete?failed=yes"
+    end
   end
 
   helpers do
