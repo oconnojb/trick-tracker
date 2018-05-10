@@ -22,7 +22,7 @@ class TricksController < Sinatra::Base
   get '/tricks/new' do
     if logged_in?
       @user = current_user
-      @dog = Dog.find_by_slug(params[:slug])
+      @dog = Dog.find_by(id: params[:id])
       erb :'tricks/new'
     else
       redirect "/login?failed=yes"
@@ -38,7 +38,7 @@ class TricksController < Sinatra::Base
     @dog.tricks.build(params[:new_trick])
     @dog.save
     @user.save
-    redirect "/dogs/#{@dog.slug}"
+    redirect "/dogs/#{@dog.id}"
   end
 
   get '/tricks/:id' do
