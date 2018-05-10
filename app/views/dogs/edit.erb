@@ -5,7 +5,7 @@
 <p>Age: <%= @dog.age %></p>
 <p>Breed: <%= @dog.breed %></p>
 
-<form action="/dogs/<%= @dog.slug %>/edit" method="post">
+<form action="/dogs/<%= @dog.id %>/edit" method="post">
   <h2>Use this form to edit the information:</h2>
   <h3>Anything left blank will not be changed.</h3>
   <p>Name: <input type="text" name="name"></p>
