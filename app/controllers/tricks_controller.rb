@@ -30,12 +30,22 @@ class TricksController < Sinatra::Base
   end
 
   post '/tricks/new' do
+
     @user = current_user
     @dog = Dog.find_by(id: params[:dog_id])
-    params[:tricks].keys.each do |trick_name|
-      @dog.tricks << Trick.find_by(name: trick_name)
+
+    if !!params[:tricks]
+      params[:tricks].keys.each do |trick_name|
+        @dog.tricks << Trick.find_by(name: trick_name)
+      end
     end
-    @dog.tricks.build(params[:new_trick])
+
+    if !!Trick.find_by(name: params[:new_trick][:name])
+      shorten = Trick.find_by(name: params[:new_trick][:name])
+      @dog.tricks << shorten if !@dog.tricks.include?(shorten)
+    else
+      @dog.tricks.build(params[:new_trick])
+    end
     @dog.save
     @user.save
     redirect "/dogs/#{@dog.id}"
