@@ -25,42 +25,56 @@ class DogsController < Sinatra::Base
 
   post '/dogs/new' do
     @user = current_user
-    @dog = @user.dogs.build(name: params[:dog][:name], age:params[:dog][:age])
+    @dog = @user.dogs.build(name: params[:dog][:name], age: params[:dog][:age], user_id: @user.id)
     @dog.breed = params[:dog][:breed].keys.first if !!params[:dog][:breed]
     @dog.breed = params[:new_breed] if !params[:new_breed].empty?
     @user.save
     @place = place(@user.dogs.size)
-    redirect "/dogs/#{@dog.slug}?new=#{@place}"
+    redirect "/dogs/#{@dog.id}?new=#{@place}"
   end
 
-  get '/dogs/:slug' do
+  get '/dogs/:id' do
     if logged_in?
-      @dog = Dog.find_by_slug(params[:slug])
+      @dog = Dog.find_by(id: params[:id])
       erb :'dogs/show_one'
     else
       redirect "/login?failed=yes"
     end
   end
 
-  get '/dogs/:slug/edit' do
+  get '/dogs/:id/edit' do
     if logged_in?
-      @dog = Dog.find_by_slug(params[:slug])
+      @dog = Dog.find_by(id: params[:id])
       erb :'dogs/edit'
     else
       redirect "/login?failed=yes"
     end
   end
 
-  post '/dogs/:slug/edit' do
+  post '/dogs/:id/edit' do
     @user = current_user
-    @dog = Dog.find_by_slug(params[:slug])
+    @dog = Dog.find_by(id: params[:id])
     @dog.name = params[:name] if !params[:name].empty?
     @dog.age = params[:age] if !params[:age].empty?
     @dog.breed = params[:breed].keys.first if !!params[:breed]
     @dog.breed = params[:new_breed] if !params[:new_breed].empty?
     @dog.save
     @user.save
-    redirect "/dogs/#{@dog.slug}"
+    redirect "/dogs/#{@dog.id}"
+  end
+
+  get '/dogs/:id/tricks/edit' do
+    if logged_in?
+      @dog = Dog.find_by(id: params[:id])
+      erb :'dogs/tricks_edit'
+    else
+      redirect "/login?failed=yes"
+    end
+  end
+
+  post '/dogs/:id/tricks/edit' do
+    @dog = Dog.find_by(id: params[:id])
+    binding.pry
   end
 
   helpers do
