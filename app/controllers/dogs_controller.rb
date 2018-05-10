@@ -85,6 +85,16 @@ class DogsController < Sinatra::Base
     redirect "/dogs/#{@dog.id}"
   end
 
+  get '/dogs/:id/delete' do
+    if logged_in?
+      @user = current_user
+      @dog = Dog.find_by(id: params[:id])
+      erb :'dogs/delete'
+    else
+      redirect "/login?failed=yes"
+    end
+  end
+
   helpers do
 		def logged_in?
 			!!session[:user_id]
