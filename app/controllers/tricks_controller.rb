@@ -37,6 +37,7 @@ class TricksController < Sinatra::Base
     end
     @dog.tricks.build(params[:new_trick])
     @dog.save
+    @user.save
     redirect "/dogs/#{@dog.slug}"
   end
 

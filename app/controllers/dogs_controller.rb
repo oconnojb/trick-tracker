@@ -52,12 +52,14 @@ class DogsController < Sinatra::Base
   end
 
   post '/dogs/:slug/edit' do
+    @user = current_user
     @dog = Dog.find_by_slug(params[:slug])
     @dog.name = params[:name] if !params[:name].empty?
     @dog.age = params[:age] if !params[:age].empty?
     @dog.breed = params[:breed].keys.first if !!params[:breed]
     @dog.breed = params[:new_breed] if !params[:new_breed].empty?
     @dog.save
+    @user.save
     redirect "/dogs/#{@dog.slug}"
   end
 
