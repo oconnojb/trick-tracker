@@ -70,7 +70,6 @@ class ApplicationController < Sinatra::Base
       @user.email = params[:email] if !params[:email].empty?
       @user.password = params[:new_password]
       @user.save
-      binding.pry
       redirect '/home'
     else
       redirect "/edit?failed=yes"
