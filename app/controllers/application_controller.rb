@@ -63,6 +63,20 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  post '/edit' do
+    @user = current_user
+    if !!@user.authenticate(params[:password])
+      @user.name = params[:name] if !params[:name].empty?
+      @user.email = params[:email] if !params[:email].empty?
+      @user.password = params[:new_password]
+      @user.save
+      binding.pry
+      redirect '/home'
+    else
+      redirect "/edit?failed=yes"
+    end
+  end
+
   get '/logout' do
     session.clear
     redirect '/'

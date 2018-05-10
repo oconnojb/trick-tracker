@@ -1,5 +1,20 @@
-<h1>Use this form to edit your information:</h1>
+<% if !!params[:failed] %>
+  <p>I'm sorry, that password does not match the one we have on file. Please try again!</p>
+<% end %>
+
+<h1>Would you like to edit your information?</h1>
+<p>Name: <%= @user.name %></p>
+<p>Email: <%= @user.email %></p>
+
+<h2>Use this form to edit your information:</h2>
+<h3>Any fields left blank will not be altered.</h3>
 
 <form action="/edit" method="post">
-  
+  <p>Name: <input type="text" name="name"></p>
+  <p>Email: <input type="text" name="email"></p>
+  <p>New Password: <input type="password" name="new_password"></p>
+
+  <h3>Enter your old password to confirm you have the authority to request these changes.</h3>
+  <input type="password" name="password">
+  <input type="submit" name="submit" value="Edit Information">
 </form>
