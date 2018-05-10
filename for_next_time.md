@@ -1,5 +1,6 @@
 ## for next time:
-Editing user, dog, trick
+Delete user (also deletes all dogs)
+Delete one dog
 
 ## overall goals:
 [x] create migrations for :users :dogs :tricks :dog_tricks
@@ -12,19 +13,21 @@ Editing user, dog, trick
   x-home page (links to login or signup) -or- redirect '/dogs' if logged_in?
   x-sign up
   x-log in
-  -edit my info
+  x-edit my info
   -delete my account (and all assc data in database)
 
   [] dog_controller
   Cx- adopt a new dog
   Rx- show all of my dogs
   Rx- show one specific dog (-x-name slug?)
-  U- edit an existing dog
+  Ux- edit an existing dog
   D- delete an existing dog
 
-  [] trick_controller
+  [x] trick_controller
   Cx- create a new trick
   Rx- show all of the tricks that i have taught at least one dog
   Rx- show the details of one specific trick
-  U- edit an existing trick's details
-  D- delete an existing trick
+  (U- edit an existing trick's details) - not going to do
+  Ux- add a trick to a dogs rep
+  Dx- delete an existing trick from a dogs rep
+  x- cannot edit or delete tricks, all users pull from the same database
