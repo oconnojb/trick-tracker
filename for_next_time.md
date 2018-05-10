@@ -1,5 +1,4 @@
 ## for next time:
-Delete user (also deletes all dogs)
 Delete one dog
 
 ## overall goals:
@@ -9,12 +8,12 @@ Delete one dog
 [] RESTful Routes
   - probably will look nicest to do different controllers
 
-  [] user_controller
+  [x] user_controller
   x-home page (links to login or signup) -or- redirect '/dogs' if logged_in?
   x-sign up
   x-log in
   x-edit my info
-  -delete my account (and all assc data in database)
+  x-delete my account (and all assc data in database)
 
   [] dog_controller
   Cx- adopt a new dog
