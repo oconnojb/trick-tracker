@@ -1,3 +1,9 @@
+<% if !!params[:auth] %>
+  <p>I'm sorry.</p>
+  <p>You tried to do something you don't have the authority to do.</p>
+  <p>Please try again.</p>
+<% end %>
+
 <h1>Hello, <%= @user.name %>!</h1>
 <h2>Welcome to your Trick Tracker!</h2>
 <h3>From this page you can:</h3>

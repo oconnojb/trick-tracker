@@ -7,6 +7,7 @@
 <h1> <%= @dog.name %> </h1>
 <h2><%= @dog.age %> years old</h2>
 <h2>Breed: <%= @dog.breed %></h2>
+<h2>Owner: <%= @dog.user.name %></h2>
 <h2>Tricks:</h2>
 <% if @dog.tricks.size > 0 %>
   <% @dog.tricks.each do |trick| %>
@@ -17,8 +18,11 @@
 <% else %>
   <p> <%= @dog.name %> does not know any tricks yet!</p>
 <% end %>
+
+<% if @dog.user == @user %>
 <a href="/tricks/new?id=<%= @dog.id %>">Teach <%= @dog.name %> a new trick!</a>
 <br>
 <a href="/dogs/<%= @dog.id %>/edit">Edit <%= @dog.name %>'s information.</a>
 <br>
 <a href="/dogs/<%= @dog.id %>/tricks/edit">Remove some of <%= @dog.name %>'s tricks</a>
+<% end %>
