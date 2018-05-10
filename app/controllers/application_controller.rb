@@ -54,6 +54,15 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  get '/edit' do
+    if logged_in?
+      @user = current_user
+      erb :'users/edit'
+    else
+      redirect "/login?failed=yes"
+    end
+  end
+
   get '/logout' do
     session.clear
     redirect '/'
