@@ -17,3 +17,5 @@
   <p> <%= @dog.name %> does not know any tricks yet!</p>
 <% end %>
 <a href="/tricks/new?slug=<%= @dog.slug %>">Teach <%= @dog.name %> a new trick!</a>
+<br>
+<a href="/dogs/<%= @dog.slug %>/edit">Edit <%= @dog.name %>'s information.</a>
