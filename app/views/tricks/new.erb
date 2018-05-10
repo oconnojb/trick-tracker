@@ -12,7 +12,13 @@
 <form action="/tricks/new" method="post">
   <p>Which tricks would you like to teach <%= @dog.name %>?</p>
   <% Trick.all.each do |trick| %>
-    <p><input type="checkbox" name="tricks[<%= trick.name %>]"> <%= trick.name %> </p>
+    <% if trick.name.empty? %>
+      <% trick.delete %>
+    <% elsif @dog.tricks.include?(trick) %>
+      <% next %>
+    <% else %>
+      <p><input type="checkbox" name="tricks[<%= trick.name %>]"> <%= trick.name %> </p>
+    <% end %>
   <% end %>
   <p>And/Or, make a new trick:</p>
   <p>Name: <input type="text" name="new_trick[name]"></p>

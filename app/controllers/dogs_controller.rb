@@ -74,7 +74,14 @@ class DogsController < Sinatra::Base
 
   post '/dogs/:id/tricks/edit' do
     @dog = Dog.find_by(id: params[:id])
-    binding.pry
+    @tricks = @dog.tricks
+    delete_array = []
+    params[:trick].keys.each do |key|
+      delete_array << Trick.find_by(id: key)
+    end
+    @dog.tricks = @tricks-delete_array
+    @dog.save
+    redirect "/dogs/#{@dog.id}"
   end
 
   helpers do

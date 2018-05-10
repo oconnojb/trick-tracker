@@ -1,8 +1,8 @@
 <h1>Manage <%= @dog.name %>'s tricks here.</h1>
-<h2>Uncheck all the tricks you wish to remove.</h2>
-<form action="/dogs/<%= @dog.slug %>/tricks/edit" method="post">
+<h2>Check all the tricks you wish to remove.</h2>
+<form action="/dogs/<%= @dog.id %>/tricks/edit" method="post">
   <% @dog.tricks.each do |trick| %>
-    <input type="checkbox" name="trick[<%= trick.name %>]" checked><%= trick.name %></input>
+    <input type="checkbox" name="trick[<%= trick.id %>]"><%= trick.name %></input>
     <br>
   <% end %>
   <input type="submit" name="submit" value="Update Tricks">
