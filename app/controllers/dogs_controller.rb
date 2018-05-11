@@ -55,12 +55,9 @@ class DogsController < Sinatra::Base
   end
 
   get '/dogs/:id/tricks/edit' do
-    if logged_in?
-      @dog = Dog.find_by(id: params[:id])
-      @dog.user == current_user ? (erb :'dogs/tricks_edit') : (redirect "/home?auth=no")
-    else
-      redirect "/login?failed=yes"
-    end
+    redirect "/login?failed=yes" if !logged_in?
+    @dog = Dog.find_by(id: params[:id])
+    @dog.user == current_user ? (erb :'dogs/tricks_edit') : (redirect "/home?auth=no")
   end
 
   post '/dogs/:id/tricks/edit' do
@@ -76,13 +73,11 @@ class DogsController < Sinatra::Base
   end
 
   get '/dogs/:id/delete' do
-    if logged_in?
-      @user = current_user
-      @dog = Dog.find_by(id: params[:id])
-      erb :'dogs/delete'
-    else
-      redirect "/login?failed=yes"
-    end
+    @dog = Dog.find_by(id: params[:id])
+    @dog.user == current_user ? (erb :'dogs/tricks_edit') : (redirect "/home?auth=no")
+    @user = current_user
+    @dog = Dog.find_by(id: params[:id])
+    erb :'dogs/delete'
   end
 
   post '/dogs/:id/delete' do
