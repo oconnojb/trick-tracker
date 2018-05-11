@@ -10,23 +10,17 @@ class TricksController < Sinatra::Base
   end
 
   get '/tricks' do
-    if logged_in?
-      @user = current_user
-      @tricks = @user.tricks.uniq
-      erb :'tricks/breakdown'
-    else
-      redirect "/login?failed=yes"
-    end
+    redirect "/login?failed=yes" if !logged_in?
+    @user = current_user
+    @tricks = @user.tricks.uniq
+    erb :'tricks/breakdown'
   end
 
   get '/tricks/new' do
-    if logged_in?
-      @user = current_user
-      @dog = Dog.find_by(id: params[:id])
-      erb :'tricks/new'
-    else
-      redirect "/login?failed=yes"
-    end
+    redirect "/login?failed=yes" if !logged_in?
+    @user = current_user
+    @dog = Dog.find_by(id: params[:id])
+    erb :'tricks/new'
   end
 
   post '/tricks/new' do
@@ -52,14 +46,10 @@ class TricksController < Sinatra::Base
   end
 
   get '/tricks/:id' do
-    if logged_in?
-      @user = current_user
-      @trick = Trick.find_by(id: params[:id])
-      erb :'tricks/show_one'
-    else
-      redirect "/login?failed=yes"
-    end
-
+    redirect "/login?failed=yes" if !logged_in?
+    @user = current_user
+    @trick = Trick.find_by(id: params[:id])
+    erb :'tricks/show_one'
   end
 
   helpers do
