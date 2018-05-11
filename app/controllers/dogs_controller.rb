@@ -46,14 +46,12 @@ class DogsController < Sinatra::Base
   end
 
   post '/dogs/:id/edit' do
-    @user = current_user
     @dog = Dog.find_by(id: params[:id])
     @dog.name = params[:name] if !params[:name].empty?
     @dog.age = params[:age] if !params[:age].empty?
     @dog.breed = params[:breed].keys.first if !!params[:breed]
     @dog.breed = params[:new_breed] if !params[:new_breed].empty?
     @dog.save
-    @user.save
     redirect "/dogs/#{@dog.id}"
   end
 
@@ -66,26 +64,23 @@ class DogsController < Sinatra::Base
   post '/dogs/:id/tricks/edit' do
     @dog = Dog.find_by(id: params[:id])
     @tricks = @dog.tricks
-    delete_array = []
-    params[:trick].keys.each do |key|
-      delete_array << Trick.find_by(id: key)
-    end
-    @dog.tricks = @tricks-delete_array
+    delete_array = params[:trick].keys.collect{|key| Trick.find_by(id: key)}
+    @tricks -= delete_array
     @dog.save
     redirect "/dogs/#{@dog.id}"
   end
 
   get '/dogs/:id/delete' do
-    @dog = Dog.find_by(id: params[:id])
-    @dog.user == current_user ? (erb :'dogs/tricks_edit') : (redirect "/home?auth=no")
+    redirect "/login?failed=yes" if !logged_in?
     @user = current_user
     @dog = Dog.find_by(id: params[:id])
+    @dog.user == @user ? (erb :'dogs/tricks_edit') : (redirect "/home?auth=no")
     erb :'dogs/delete'
   end
 
   post '/dogs/:id/delete' do
-    @dog = Dog.find_by(id: params[:id])
     @user = current_user
+    @dog = Dog.find_by(id: params[:id])
     @dog.delete
     @user.save
     redirect '/dogs'
