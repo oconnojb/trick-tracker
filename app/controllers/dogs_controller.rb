@@ -10,13 +10,10 @@ class DogsController < Sinatra::Base
   end
 
   get '/dogs' do
-    if logged_in?
-      @user = current_user
-      @dogs = @user.dogs
-      erb :'dogs/show_all'
-    else
-      redirect "/login?failed=yes"
-    end
+    redirect "/login?failed=yes" if !logged_in?
+    @user = current_user
+    @dogs = @user.dogs
+    erb :'dogs/show_all'
   end
 
   get '/dogs/new' do
@@ -29,27 +26,20 @@ class DogsController < Sinatra::Base
     @dog.breed = params[:dog][:breed].keys.first if !!params[:dog][:breed]
     @dog.breed = params[:new_breed] if !params[:new_breed].empty?
     @user.save
-    @place = place(@user.dogs.size)
-    redirect "/dogs/#{@dog.id}?new=#{@place}"
+    redirect "/dogs/#{@dog.id}?new=#{place(@user.dogs.size)}"
   end
 
   get '/dogs/:id' do
-    if logged_in?
-      @dog = Dog.find_by(id: params[:id])
-      @user = current_user
-      erb :'dogs/show_one'
-    else
-      redirect "/login?failed=yes"
-    end
+    redirect "/login?failed=yes" if !logged_in?
+    @dog = Dog.find_by(id: params[:id])
+    @user = current_user
+    erb :'dogs/show_one'
   end
 
   get '/dogs/:id/edit' do
-    if logged_in?
-      @dog = Dog.find_by(id: params[:id])
-      @dog.user == current_user ? (erb :'dogs/edit') : (redirect "/home?auth=no")
-    else
-      redirect "/login?failed=yes"
-    end
+    redirect "/login?failed=yes" if !logged_in?
+    @dog = Dog.find_by(id: params[:id])
+    @dog.user == current_user ? (erb :'dogs/edit') : (redirect "/home?auth=no")
   end
 
   post '/dogs/:id/edit' do
@@ -114,10 +104,10 @@ class DogsController < Sinatra::Base
 
     def place(integer)
       placement_array = ['zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']
-      if integer > 0 && integer <= 10
+      if integer.between?(1, 10)
         return placement_array[integer]
       else
-        return integer
+        return integer.to_s
       end
     end
 	end
