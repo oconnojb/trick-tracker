@@ -31,7 +31,7 @@ class TricksController < Sinatra::Base
     @user = current_user
     @dog = Dog.find_by(id: params[:dog_id])
 
-    params[:tricks].keys.collect{|trick_name| Trick.find_by(name: trick_name)} if !!params[:tricks]
+    @dog.tricks = params[:tricks].keys.collect{|trick_name| Trick.find_by(name: trick_name)} if !!params[:tricks]
 
     if !!Trick.find_by(name: params[:new_trick][:name])
       shorten = Trick.find_by(name: params[:new_trick][:name])
