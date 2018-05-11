@@ -28,12 +28,9 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/home' do
-    if logged_in?
-      @user = User.find_by(id: session[:user_id])
-      erb :'users/home'
-    else
-      redirect "/login?failed=yes"
-    end
+    redirect "/login?failed=yes" if !logged_in?
+    @user = User.find_by(id: session[:user_id])
+    erb :'users/home'
   end
 
   get '/login' do
@@ -52,12 +49,9 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/edit' do
-    if logged_in?
-      @user = current_user
-      erb :'users/edit'
-    else
-      redirect "/login?failed=yes"
-    end
+    redirect "/login?failed=yes" if !logged_in?
+    @user = current_user
+    erb :'users/edit'
   end
 
   post '/edit' do
@@ -79,12 +73,9 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/delete' do
-    if logged_in?
-      @user = current_user
-      erb :'users/delete'
-    else
-      redirect "/login?failed=yes"
-    end
+    redirect "/login?failed=yes" if !logged_in?
+    @user = current_user
+    erb :'users/delete'
   end
 
   post '/delete' do
