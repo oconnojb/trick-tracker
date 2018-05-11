@@ -41,14 +41,11 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/login' do
-    if !params[:user][:email].empty? && !params[:user][:password].empty?
-      @user = User.find_by(email: params[:user][:email])
-      if (@user!=nil) && (!!@user.authenticate(params[:user][:password]))
-        session[:user_id] = @user.id
-        redirect '/home'
-      else
-        redirect "/login?failed=yes"
-      end
+    truthiness = !params[:user][:email].empty? && !params[:user][:password].empty?
+    @user = User.find_by(email: params[:user][:email]) if !!truthiness
+    if (@user!=nil) && (!!@user.authenticate(params[:user][:password]))
+      session[:user_id] = @user.id
+      redirect '/home'
     else
       redirect "/login?failed=yes"
     end
@@ -65,10 +62,10 @@ class ApplicationController < Sinatra::Base
 
   post '/edit' do
     @user = current_user
-    if !!@user.authenticate(params[:password])
+    if !params[:password].empty? || !!@user.authenticate(params[:password])
       @user.name = params[:name] if !params[:name].empty?
       @user.email = params[:email] if !params[:email].empty?
-      @user.password = params[:new_password]
+      @user.password = params[:new_password] if !params[:new_password].empty?
       @user.save
       redirect '/home'
     else
@@ -92,7 +89,7 @@ class ApplicationController < Sinatra::Base
 
   post '/delete' do
     @user = current_user
-    if !!@user.authenticate(params[:password])
+    if !params[:password].empty? || !!@user.authenticate(params[:password])
       @user.dogs.each do |dog|
         dog.delete
       end
@@ -115,10 +112,10 @@ class ApplicationController < Sinatra::Base
 
     def place(integer)
       placement_array = ['zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']
-      if integer > 0 && integer <= 10
+      if integer.between?(1, 10)
         return placement_array[integer]
       else
-        return integer
+        return integer.to_s
       end
     end
 	end
