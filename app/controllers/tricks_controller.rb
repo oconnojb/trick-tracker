@@ -1,6 +1,9 @@
 require './config/environment'
+require_relative "concerns/helpers.rb"
 
 class TricksController < Sinatra::Base
+
+  helpers ApplicationHelper
 
   configure do
     set :public_folder, 'public'
@@ -51,23 +54,4 @@ class TricksController < Sinatra::Base
     @trick = Trick.find_by(id: params[:id])
     erb :'tricks/show_one'
   end
-
-  helpers do
-		def logged_in?
-			!!session[:user_id]
-		end
-
-		def current_user
-			User.find(session[:user_id])
-		end
-
-    def place(integer)
-      placement_array = ['zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']
-      if integer > 0 && integer <= 10
-        return placement_array[integer]
-      else
-        return integer
-      end
-    end
-	end
 end

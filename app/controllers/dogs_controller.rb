@@ -1,6 +1,9 @@
 require './config/environment'
+require_relative "concerns/helpers.rb"
 
 class DogsController < Sinatra::Base
+
+  helpers ApplicationHelper
 
   configure do
     set :public_folder, 'public'
@@ -87,23 +90,4 @@ class DogsController < Sinatra::Base
     @user.save
     redirect '/dogs'
   end
-
-  helpers do
-		def logged_in?
-			!!session[:user_id]
-		end
-
-		def current_user
-			User.find(session[:user_id])
-		end
-
-    def place(integer)
-      placement_array = ['zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']
-      if integer.between?(1, 10)
-        return placement_array[integer]
-      else
-        return integer.to_s
-      end
-    end
-	end
 end

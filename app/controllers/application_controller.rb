@@ -1,6 +1,9 @@
 require './config/environment'
+require_relative "concerns/helpers.rb"
 
 class ApplicationController < Sinatra::Base
+
+  helpers ApplicationHelper
 
   configure do
     set :public_folder, 'public'
@@ -91,24 +94,4 @@ class ApplicationController < Sinatra::Base
       redirect "/delete?failed=yes"
     end
   end
-
-  helpers do
-		def logged_in?
-			!!session[:user_id]
-		end
-
-		def current_user
-			User.find(session[:user_id])
-		end
-
-    def place(integer)
-      placement_array = ['zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']
-      if integer.between?(1, 10)
-        return placement_array[integer]
-      else
-        return integer.to_s
-      end
-    end
-	end
-
 end
