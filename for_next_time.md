@@ -1,11 +1,11 @@
 ## for next time:
-[]Delete one dog
+[x]Delete one dog
 
 ## overall goals:
 [x] create migrations for :users :dogs :tricks :dog_tricks
 [x] #place methods (1.place returns "first") for integer class?
 [x]  Dog dob??? -- actually: Dog age
-[] RESTful Routes
+[x] RESTful Routes
   - probably will look nicest to do different controllers
 
   [x] user_controller
@@ -15,12 +15,12 @@
   x-edit my info
   x-delete my account (and all assc data in database)
 
-  [] dog_controller
+  [x] dog_controller
   Cx- adopt a new dog
   Rx- show all of my dogs
   Rx- show one specific dog (-x-name slug?)
   Ux- edit an existing dog
-  D- delete an existing dog
+  Dx- delete an existing dog
 
   [x] trick_controller
   Cx- create a new trick

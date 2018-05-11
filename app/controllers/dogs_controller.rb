@@ -95,6 +95,14 @@ class DogsController < Sinatra::Base
     end
   end
 
+  post '/dogs/:id/delete' do
+    @dog = Dog.find_by(id: params[:id])
+    @user = current_user
+    @dog.delete
+    @user.save
+    redirect '/dogs'
+  end
+
   helpers do
 		def logged_in?
 			!!session[:user_id]

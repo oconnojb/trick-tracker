@@ -1,1 +1,6 @@
-delete.erb
+
+<h1>Remove <%= @dog.name %> from your profile?</h1>
+<form action="/dogs/<%= @dog.id %>/delete" method="post">
+<h2>Are you sure?</h2>
+<input type="submit" name="submit" value="I am sure">
+</form>
