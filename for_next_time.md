@@ -1,5 +1,5 @@
 ## for next time:
-Delete one dog
+[]Delete one dog
 
 ## overall goals:
 [x] create migrations for :users :dogs :tricks :dog_tricks
