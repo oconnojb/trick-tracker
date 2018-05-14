@@ -32,7 +32,7 @@ class ApplicationController < Sinatra::Base
 
   get '/home' do
     redirect "/login?failed=yes" if !logged_in?
-    @user = User.find_by(id: session[:user_id])
+    @user = current_user
     erb :'users/home'
   end
 
