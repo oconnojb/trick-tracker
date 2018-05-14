@@ -9,8 +9,14 @@ module ApplicationHelper
   end
 
   def place(integer)
-    placement_array = ['zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']
-    if integer.between?(1, 10)
+    placement_array = [
+      'zeroth', 'first', 'second', 'third',
+      'fourth', 'fifth', 'sixth', 'seventh',
+      'eighth', 'ninth', 'tenth', 'eleventh',
+      'twelfth', 'thirteenth', 'fourteenth',
+      'fifteenth', 'sixteenth', 'seventeenth',
+      'eighteenth', 'nineteenth', 'twentieth']
+    if integer.between?(1, 20)
       return placement_array[integer]
     else
       return integer.to_s

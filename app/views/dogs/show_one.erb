@@ -4,6 +4,12 @@
   <p>------------------------------------------</p>
 <% end %>
 
+<% if !!params[:trick] %>
+  <h1>Congratulations!</h1>
+  <h3><%= @dog.name %> learned his/her <%= params[:trick] %> trick!</h3>
+  <p>------------------------------------------</p>
+<% end %>
+
 <h1> <%= @dog.name %> </h1>
 <h2><%= @dog.age %> years old</h2>
 <h2>Breed: <%= @dog.breed %></h2>

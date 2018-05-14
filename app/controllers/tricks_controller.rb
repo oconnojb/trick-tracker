@@ -39,11 +39,10 @@ class TricksController < Sinatra::Base
     else
       @dog.tricks.build(params[:new_trick])
     end
-    
+
     @dog.save
     @user.save
-    
-    redirect "/dogs/#{@dog.id}"
+    redirect "/dogs/#{@dog.id}?trick=#{place(@dog.tricks.size)}"
   end
 
   get '/tricks/:id' do
