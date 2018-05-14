@@ -44,7 +44,7 @@ class ApplicationController < Sinatra::Base
     none_empty = !params[:user][:email].empty? && !params[:user][:password].empty?
     @user = User.find_by(email: params[:user][:email]) if !!none_empty
     user_password_match = (@user!=nil) && (!!@user.authenticate(params[:user][:password]))
-    redirect "/logind?failed=yes" if !user_password_match
+    redirect "/login?failed=yes" if !user_password_match
     session[:user_id] = @user.id
     redirect '/home'
   end
