@@ -41,14 +41,12 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/login' do
-    truthiness = !params[:user][:email].empty? && !params[:user][:password].empty?
-    @user = User.find_by(email: params[:user][:email]) if !!truthiness
-    if (@user!=nil) && (!!@user.authenticate(params[:user][:password]))
-      session[:user_id] = @user.id
-      redirect '/home'
-    else
-      redirect "/login?failed=yes"
-    end
+    none_empty = !params[:user][:email].empty? && !params[:user][:password].empty?
+    @user = User.find_by(email: params[:user][:email]) if !!none_empty
+    user_password_match = (@user!=nil) && (!!@user.authenticate(params[:user][:password]))
+    redirect "/logind?failed=yes" if !user_password_match
+    session[:user_id] = @user.id
+    redirect '/home'
   end
 
   get '/edit' do
