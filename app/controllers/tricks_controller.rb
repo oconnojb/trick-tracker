@@ -27,17 +27,18 @@ class TricksController < Sinatra::Base
   end
 
   post '/tricks/new' do
-
     @user = current_user
     @dog = Dog.find_by(id: params[:dog_id])
 
-    @dog.tricks = params[:tricks].keys.collect{|trick_name| Trick.find_by(name: trick_name)} if !!params[:tricks]
+    @dog.tricks += params[:tricks].keys.collect{|trick_name| Trick.find_by(name: trick_name)} if !!params[:tricks]
 
-    if !!Trick.find_by(name: params[:new_trick][:name])
-      shorten = Trick.find_by(name: params[:new_trick][:name])
-      @dog.tricks << shorten if !@dog.tricks.include?(shorten)
-    else
-      @dog.tricks.build(params[:new_trick])
+    if !params[:new_trick][:name].empty?
+      if !!Trick.find_by(name: params[:new_trick][:name])
+        shorten = Trick.find_by(name: params[:new_trick][:name])
+        @dog.tricks << shorten if !@dog.tricks.include?(shorten)
+      else
+        @dog.tricks.build(params[:new_trick])
+      end
     end
 
     @dog.save
