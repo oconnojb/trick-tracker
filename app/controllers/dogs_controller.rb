@@ -74,8 +74,7 @@ class DogsController < Sinatra::Base
     redirect "/login?failed=yes" if !logged_in?
     @user = current_user
     @dog = Dog.find_by(id: params[:id])
-    @dog.user == @user ? (erb :'dogs/tricks_edit') : (redirect "/home?auth=no")
-    erb :'dogs/delete'
+    @dog.user == @user ? (erb :'dogs/delete') : (redirect "/home?auth=no")
   end
 
   post '/dogs/:id/delete' do
