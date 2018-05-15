@@ -65,7 +65,7 @@ class DogsController < Sinatra::Base
     @dog = Dog.find_by(id: params[:id])
     @tricks = @dog.tricks
     delete_array = params[:trick].keys.collect{|key| Trick.find_by(id: key)}
-    @tricks -= delete_array
+    @dog.tricks = @tricks - delete_array
     @dog.save
     redirect "/dogs/#{@dog.id}"
   end
