@@ -81,8 +81,11 @@ class ApplicationController < Sinatra::Base
 
   post '/delete' do
     @user = current_user
-    if !params[:password].empty? || !!@user.authenticate(params[:password])
+    if !params[:password].empty? && !!@user.authenticate(params[:password])
       @user.dogs.each do |dog|
+        DogTrick.all.each do |row|
+          row.delete if row.dog_id == dog.id
+        end
         dog.delete
       end
       @user.delete

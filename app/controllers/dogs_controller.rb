@@ -80,6 +80,9 @@ class DogsController < Sinatra::Base
   post '/dogs/:id/delete' do
     @user = current_user
     @dog = Dog.find_by(id: params[:id])
+    DogTrick.all.each do |row|
+      row.delete if row.dog_id == @dog.id
+    end
     @dog.delete
     @user.save
     redirect '/dogs'
