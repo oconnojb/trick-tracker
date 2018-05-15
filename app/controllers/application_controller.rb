@@ -57,7 +57,7 @@ class ApplicationController < Sinatra::Base
 
   post '/edit' do
     @user = current_user
-    if !params[:password].empty? || !!@user.authenticate(params[:password])
+    if !params[:password].empty? && !!@user.authenticate(params[:password])
       @user.name = params[:name] if !params[:name].empty?
       @user.email = params[:email] if !params[:email].empty?
       @user.password = params[:new_password] if !params[:new_password].empty?
