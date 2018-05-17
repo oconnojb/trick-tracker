@@ -1,5 +1,5 @@
 ## for next time:
-[x]Delete one dog
+Project completed.
 
 ## overall goals:
 [x] create migrations for :users :dogs :tricks :dog_tricks
