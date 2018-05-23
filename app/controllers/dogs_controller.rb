@@ -14,8 +14,7 @@ class DogsController < Sinatra::Base
 
   get '/dogs' do
     redirect "/login?failed=yes" if !logged_in?
-    @user = current_user
-    @dogs = @user.dogs
+    @dogs = current_user.dogs
     erb :'dogs/show_all'
   end
 
@@ -24,18 +23,16 @@ class DogsController < Sinatra::Base
   end
 
   post '/dogs/new' do
-    @user = current_user
-    @dog = @user.dogs.build(name: params[:dog][:name], age: params[:dog][:age], user_id: @user.id)
+    @dog = current_user.dogs.build(name: params[:dog][:name], age: params[:dog][:age], user_id: current_user.id)
     @dog.breed = params[:dog][:breed].keys.first if !!params[:dog][:breed]
     @dog.breed = params[:new_breed] if !params[:new_breed].empty?
-    @user.save
-    redirect "/dogs/#{@dog.id}?new=#{place(@user.dogs.size)}"
+    current_user.save
+    redirect "/dogs/#{@dog.id}?new=#{place(current_user.dogs.size)}"
   end
 
   get '/dogs/:id' do
     redirect "/login?failed=yes" if !logged_in?
     @dog = Dog.find_by(id: params[:id])
-    @user = current_user
     erb :'dogs/show_one'
   end
 
@@ -78,13 +75,12 @@ class DogsController < Sinatra::Base
   end
 
   post '/dogs/:id/delete' do
-    @user = current_user
     @dog = Dog.find_by(id: params[:id])
     DogTrick.all.each do |row|
       row.delete if row.dog_id == @dog.id
     end
     @dog.delete
-    @user.save
+    current_user.save
     redirect '/dogs'
   end
 end

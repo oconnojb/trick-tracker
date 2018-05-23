@@ -3,8 +3,8 @@
 <% end %>
 
 <h1>Would you like to edit your information?</h1>
-<p>Name: <%= @user.name %></p>
-<p>Email: <%= @user.email %></p>
+<p>Name: <%= current_user.name %></p>
+<p>Email: <%= current_user.email %></p>
 
 <h2>Use this form to edit your information:</h2>
 <h3>Any fields left blank will not be altered.</h3>

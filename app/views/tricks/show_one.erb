@@ -10,7 +10,7 @@
 <p><%= @trick.description %></p>
 
 <h2>Dogs that know <%= @trick.name.capitalize %></h2>
-<% @user.dogs.select{|dog| dog.tricks.include?(@trick)}.each do |doggo| %>
+<% current_user.dogs.select{|dog| dog.tricks.include?(@trick)}.each do |doggo| %>
   <ul>
     <li><a href="/dogs/<%= doggo.id %>"><%= doggo.name %></a></li>
   </ul>

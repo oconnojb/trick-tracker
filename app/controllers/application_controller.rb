@@ -32,7 +32,6 @@ class ApplicationController < Sinatra::Base
 
   get '/home' do
     redirect "/login?failed=yes" if !logged_in?
-    @user = current_user
     erb :'users/home'
   end
 
@@ -51,17 +50,15 @@ class ApplicationController < Sinatra::Base
 
   get '/edit' do
     redirect "/login?failed=yes" if !logged_in?
-    @user = current_user
     erb :'users/edit'
   end
 
   post '/edit' do
-    @user = current_user
-    if !params[:password].empty? && !!@user.authenticate(params[:password])
-      @user.name = params[:name] if !params[:name].empty?
-      @user.email = params[:email] if !params[:email].empty?
-      @user.password = params[:new_password] if !params[:new_password].empty?
-      @user.save
+    if !params[:password].empty? && !!current_user.authenticate(params[:password])
+      current_user.name = params[:name] if !params[:name].empty?
+      current_user.email = params[:email] if !params[:email].empty?
+      current_user.password = params[:new_password] if !params[:new_password].empty?
+      current_user.save
       redirect '/home'
     else
       redirect "/edit?failed=yes"
@@ -75,20 +72,18 @@ class ApplicationController < Sinatra::Base
 
   get '/delete' do
     redirect "/login?failed=yes" if !logged_in?
-    @user = current_user
     erb :'users/delete'
   end
 
   post '/delete' do
-    @user = current_user
-    if !params[:password].empty? && !!@user.authenticate(params[:password])
-      @user.dogs.each do |dog|
+    if !params[:password].empty? && !!current_user.authenticate(params[:password])
+      current_user.dogs.each do |dog|
         DogTrick.all.each do |row|
           row.delete if row.dog_id == dog.id
         end
         dog.delete
       end
-      @user.delete
+      current_user.delete
       session.clear
       redirect '/'
     else

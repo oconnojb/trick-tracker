@@ -1,4 +1,4 @@
-<h1>You are going to teach <%= @dog.name %> a new trick!</h1>
+<h1><%= current_user.name %>, you are going to teach <%= @dog.name %> a new trick!</h1>
 
 <h2>Currently, <%= @dog.name %> knows <%= @dog.tricks.size %> trick(s)</h2>
 <% if @dog.tricks.size > 0 %>

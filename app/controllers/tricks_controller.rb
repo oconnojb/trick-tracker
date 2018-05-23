@@ -14,20 +14,17 @@ class TricksController < Sinatra::Base
 
   get '/tricks' do
     redirect "/login?failed=yes" if !logged_in?
-    @user = current_user
-    @tricks = @user.tricks.uniq
+    @tricks = current_user.tricks.uniq
     erb :'tricks/breakdown'
   end
 
   get '/tricks/new' do
     redirect "/login?failed=yes" if !logged_in?
-    @user = current_user
     @dog = Dog.find_by(id: params[:id])
     erb :'tricks/new'
   end
 
   post '/tricks/new' do
-    @user = current_user
     @dog = Dog.find_by(id: params[:dog_id])
 
     @dog.tricks += params[:tricks].keys.collect{|trick_name| Trick.find_by(name: trick_name)} if !!params[:tricks]
@@ -42,13 +39,11 @@ class TricksController < Sinatra::Base
     end
 
     @dog.save
-    @user.save
     redirect "/dogs/#{@dog.id}?trick=#{place(@dog.tricks.size)}"
   end
 
   get '/tricks/:id' do
     redirect "/login?failed=yes" if !logged_in?
-    @user = current_user
     @trick = Trick.find_by(id: params[:id])
     erb :'tricks/show_one'
   end

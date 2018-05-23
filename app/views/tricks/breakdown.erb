@@ -2,7 +2,7 @@
 <h2>You have taught <%= @tricks.size %> tricks to your dog(s)!</h2>
 <% if @tricks.size > 0 %>
   <% @tricks.each do |trick| %>
-    <% number = @user.tricks.select{|t| t.name == trick.name}.size %>
+    <% number = current_user.tricks.select{|t| t.name == trick.name}.size %>
     <ul>
       <li><a href="/tricks/<%= trick.id %>"><%= trick.name %></a> (<%= number %> times)</li>
     </ul>

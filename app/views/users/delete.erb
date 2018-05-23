@@ -2,7 +2,7 @@
   <p>I'm sorry, that password doesn't match. Please try again!</p>
 <% end %>
 
-<h1>Dear <%= @user.name %>,</h1>
+<h1>Dear <%= current_user.name %>,</h1>
 <h2>You want to delete your account with Trick-Tracker?</h2>
 <h3>While we begin the mourning process,</h3>
 <h4>You will need to enter your password one last time.</h4>
@@ -10,7 +10,7 @@
 <h6>Sincerely, the Trick Tracker Team</h6>
 
 <form action="/delete" method="post">
-  <p>Enter password for email: <%= @user.email %></p>
+  <p>Enter password for email: <%= current_user.email %></p>
   <input type="password" name="password">
   <input type="submit" name="submit" value="Delete Account">
 </form>

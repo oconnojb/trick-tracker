@@ -25,7 +25,7 @@
   <p> <%= @dog.name %> does not know any tricks yet!</p>
 <% end %>
 
-<% if @dog.user == @user %>
+<% if @dog.user == current_user %>
 <a href="/tricks/new?id=<%= @dog.id %>">Teach <%= @dog.name %> a new trick!</a>
 <br>
 <a href="/dogs/<%= @dog.id %>/edit">Edit <%= @dog.name %>'s information.</a>
